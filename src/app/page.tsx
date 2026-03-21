@@ -68,7 +68,7 @@ export default function Dashboard() {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             
             {/* Logo and Title Section */}
-            <div className="flex items-center space-x-3 w-full sm:w-auto justify-between">
+            <div className="flex items-center justify-between w-full sm:w-auto">
               <div className="flex items-center space-x-3">
                 <div className="bg-blue-600 p-2 rounded-lg text-white shrink-0">
                   <Briefcase size={22} className="sm:w-6 sm:h-6" />
@@ -80,23 +80,13 @@ export default function Dashboard() {
                   </p>
                 </div>
               </div>
-              
-              {/* Mobile Refresh Button */}
-              <button
-                onClick={fetchJobs}
-                disabled={loading}
-                className="sm:hidden p-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 disabled:opacity-50"
-                aria-label="Refresh Results"
-              >
-                <RefreshCcw size={20} className={`${loading ? 'animate-spin' : ''}`} />
-              </button>
             </div>
 
-            {/* Desktop Refresh Button */}
+            {/* Refresh Button - Full text on both mobile and desktop */}
             <button
               onClick={fetchJobs}
               disabled={loading}
-              className="hidden sm:flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 shrink-0"
+              className="w-full sm:w-auto flex justify-center items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 shrink-0"
             >
               <RefreshCcw size={16} className={`mr-2 ${loading ? 'animate-spin' : ''}`} />
               {loading ? 'Refreshing...' : 'Refresh Results'}
