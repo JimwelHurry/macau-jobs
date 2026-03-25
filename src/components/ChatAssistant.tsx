@@ -11,7 +11,7 @@ interface Message {
 export default function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Hi baby! Ako to, yung career assistant mo. Tutulungan kita makahanap ng trabaho na may mag-i-sponsor sayo ng blue card. Ako bahala sayo, got u! Mwahh 😘' }
+    { role: 'assistant', content: 'Hi baby Clarisse! Ako to si Jimwel, yung pinaka-gwapong career assistant mo hahaha! Tutulungan kita makahanap ng teaching job sa Macau. Kahit "far" pa yan baby, pupuntahan natin! Ako bahala sayo, got u! Mwahh 😘' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
