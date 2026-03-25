@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ExternalLink, Search, RefreshCcw, Briefcase, MapPin, AlertCircle, Mail, CheckCircle2, Info, Sparkles } from 'lucide-react';
+import ChatAssistant from '@/components/ChatAssistant';
 
 interface Job {
   title: string;
@@ -13,6 +14,9 @@ interface Job {
   email: string | null;
   query: string;
   date: string;
+  aiSummary?: string | null;
+  matchScore?: number;
+  actionableAdvice?: string;
 }
 
 export default function Dashboard() {
@@ -74,9 +78,11 @@ export default function Dashboard() {
                   <Briefcase size={22} className="sm:w-6 sm:h-6" />
                 </div>
                 <div>
-                  <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Macau Teaching Jobs</h1>
+                  <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight flex items-center">
+                    Macau Teaching Jobs <span className="ml-2 px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-md border border-purple-200">AI Powered</span>
+                  </h1>
                   <p className="text-xs sm:text-sm text-gray-500 flex items-center mt-0.5">
-                    <MapPin size={12} className="mr-1 shrink-0" /> For Non-Residents
+                    <MapPin size={12} className="mr-1 shrink-0" /> Recent Uploads & Visa Sponsorship Focus
                   </p>
                 </div>
               </div>
@@ -118,8 +124,8 @@ export default function Dashboard() {
                 />
               </div>
               <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 flex items-center">
-                Sponsorship/Quota Only
-                <span className="ml-1.5 text-gray-400" title="Shows employers that provide Blue Cards/Visas.">
+                Requires Visa Sponsorship
+                <span className="ml-1.5 text-gray-400" title="Shows employers that provide Blue Cards/Visas based on Groq AI.">
                   <Info size={14} />
                 </span>
               </span>
@@ -195,6 +201,9 @@ export default function Dashboard() {
                     <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] sm:text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200">
                       {job.source}
                     </span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] sm:text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                      {job.date}
+                    </span>
                     {job.hasStatusClue && (
                       <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] sm:text-xs font-medium bg-green-50 text-green-700 border border-green-200">
                         <CheckCircle2 size={10} className="mr-1 sm:w-3 sm:h-3" />
@@ -212,6 +221,30 @@ export default function Dashboard() {
                   <p className="text-xs sm:text-sm text-gray-600 line-clamp-3 leading-relaxed mb-4">
                     {job.snippet}
                   </p>
+
+                  {job.aiSummary && (
+                    <div className="mb-4 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center text-purple-700">
+                          <Sparkles size={14} className="mr-1.5" />
+                          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider">AI Analysis</span>
+                        </div>
+                        {job.matchScore !== undefined && (
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${job.matchScore >= 80 ? 'bg-green-100 text-green-700 border-green-200' : job.matchScore >= 50 ? 'bg-yellow-100 text-yellow-700 border-yellow-200' : 'bg-gray-100 text-gray-600 border-gray-200'}`}>
+                            {job.matchScore}% Match
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs sm:text-sm text-purple-900 font-medium leading-relaxed mb-2">
+                        {job.aiSummary}
+                      </p>
+                      {job.actionableAdvice && (
+                        <div className="bg-white/60 p-2 rounded text-xs text-purple-800 border border-purple-100 mt-2">
+                          <span className="font-bold">Next Step:</span> {job.actionableAdvice}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {job.email && (
                     <div className="mb-4 flex items-center p-2.5 sm:p-2 bg-blue-50 border border-blue-100 rounded-lg">
@@ -241,6 +274,9 @@ export default function Dashboard() {
           </div>
         )}
       </main>
+      
+      {/* Floating Chat Assistant */}
+      <ChatAssistant />
     </div>
   );
 }
