@@ -64,6 +64,31 @@ export default function ChatAssistant() {
     }
   };
 
+  const renderMessageContent = (content: string) => {
+    // Regex to find URLs
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    
+    // Split the content by URLs
+    const parts = content.split(urlRegex);
+    
+    return parts.map((part, index) => {
+      if (part.match(urlRegex)) {
+        return (
+          <a 
+            key={index} 
+            href={part} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 underline break-all font-medium"
+          >
+            {part}
+          </a>
+        );
+      }
+      return <span key={index}>{part}</span>;
+    });
+  };
+
   return (
     <>
       {/* Floating Action Button */}
@@ -116,7 +141,7 @@ export default function ChatAssistant() {
                         ? 'bg-blue-500 text-white rounded-tr-none' 
                         : 'bg-white text-gray-800 border border-pink-100 rounded-tl-none'}`}
                   >
-                    {msg.content}
+                    {renderMessageContent(msg.content)}
                   </div>
                 </div>
               </div>
