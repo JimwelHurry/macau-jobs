@@ -88,7 +88,7 @@ export default function ChatAssistant() {
               <Heart size={24} className="fill-white" />
               <div>
                 <h3 className="font-bold text-sm sm:text-base leading-tight">Baby Chat</h3>
-                <p className="text-[10px] sm:text-xs text-pink-100">Always here for you, love ❤️</p>
+                <p className="text-[10px] sm:text-xs text-pink-100">Always here for you, baby ❤️</p>
               </div>
             </div>
             <button 
